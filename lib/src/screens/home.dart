@@ -70,6 +70,7 @@ class HomeState extends State<Home> with TickerProviderStateMixin{
               buildCatAnimation(),
               buildBox(),
               buildLeftFlap(),
+              buildRightFlap()
             ],
           ),  
         ),
@@ -105,6 +106,28 @@ class HomeState extends State<Home> with TickerProviderStateMixin{
 
     return Positioned(
       left: 3.0,
+      child: AnimatedBuilder(
+      animation: boxAnimaton,
+        child: Container(
+                height: 10.0,
+                width: 125.0,
+                color: Colors.brown,
+              ),
+        builder: (context, child){
+          return Transform.rotate(
+            child: child,
+            alignment: Alignment.topLeft,
+            angle: boxAnimaton.value,
+          );
+        },
+      )
+    );
+  }
+
+  Widget buildRightFlap(){
+
+    return Positioned(
+      right: 3.0,
       child: AnimatedBuilder(
       animation: boxAnimaton,
         child: Container(
