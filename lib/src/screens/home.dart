@@ -23,7 +23,7 @@ class HomeState extends State<Home> with TickerProviderStateMixin{
     boxAnimaton = Tween(begin: pi * 0.6, end: pi * 0.65).animate(
       CurvedAnimation(
         parent: boxAnimationController,
-        curve: Curves.linear,
+        curve: Curves.easeInOut,
       )
     ); 
     boxAnimationController.addStatusListener((status){
@@ -51,8 +51,10 @@ class HomeState extends State<Home> with TickerProviderStateMixin{
   onTap(){
 
     if(catAnimationController.status == AnimationStatus.completed){
+      boxAnimationController.forward();
       catAnimationController.reverse();
     }else if(catAnimationController.status == AnimationStatus.dismissed){
+      boxAnimationController.stop();
       catAnimationController.forward();
     }
   }
