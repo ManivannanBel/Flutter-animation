@@ -129,7 +129,7 @@ class HomeState extends State<Home> with TickerProviderStateMixin{
     return Positioned(
       right: 3.0,
       child: AnimatedBuilder(
-      animation: boxAnimaton,
+        animation: boxAnimaton,
         child: Container(
                 height: 10.0,
                 width: 125.0,
@@ -138,8 +138,8 @@ class HomeState extends State<Home> with TickerProviderStateMixin{
         builder: (context, child){
           return Transform.rotate(
             child: child,
-            alignment: Alignment.topLeft,
-            angle: boxAnimaton.value,
+            alignment: Alignment.topRight,
+            angle: -boxAnimaton.value,
           );
         },
       )
