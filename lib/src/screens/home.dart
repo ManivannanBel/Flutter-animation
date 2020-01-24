@@ -9,9 +9,31 @@ class Home extends StatefulWidget{
 class HomeState extends State<Home> with TickerProviderStateMixin{
   Animation<double> catAnimation;
   AnimationController catAnimationController;
+  Animation<double> boxAnimaton;
+  AnimationController boxAnimationController;
 
   initState(){
-    super.initState();   
+    super.initState();  
+
+    boxAnimationController = AnimationController(
+      duration: Duration(milliseconds: 300),
+      vsync: this,
+    );
+
+    boxAnimaton = Tween(begin: pi * 0.6, end: pi * 0.65).animate(
+      CurvedAnimation(
+        parent: boxAnimationController,
+        curve: Curves.linear,
+      )
+    ); 
+    boxAnimationController.addStatusListener((status){
+      if(status == AnimationStatus.completed){
+        boxAnimationController.repeat();
+      }else if(status == AnimationStatus.dismissed){
+        boxAnimationController.forward();
+      }
+    });
+    boxAnimationController.forward();
 
     catAnimationController = AnimationController(
       duration: Duration(milliseconds: 200),
@@ -83,15 +105,21 @@ class HomeState extends State<Home> with TickerProviderStateMixin{
 
     return Positioned(
       left: 3.0,
-      child: Transform.rotate(
+      child: AnimatedBuilder(
+      animation: boxAnimaton,
         child: Container(
-          height: 10.0,
-          width: 125.0,
-          color: Colors.brown,
-        ),
-        angle: pi * 0.6,
-        alignment: Alignment.topLeft,
-      ),
+                height: 10.0,
+                width: 125.0,
+                color: Colors.brown,
+              ),
+        builder: (context, child){
+          return Transform.rotate(
+            child: child,
+            alignment: Alignment.topLeft,
+            angle: boxAnimaton.value,
+          );
+        },
+      )
     );
   }
 }
